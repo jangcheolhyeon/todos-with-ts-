@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import styles from './css/TodoHeader.module.css';
 
 interface todosArray {
     id : number,
@@ -25,6 +26,12 @@ const TodoHeader = ({ todo_header_change, setTodo, todo, setTodos, todos} : Todo
         }
     }
 
+    useEffect(() => {
+        for(let i=0;i<todos.length;i++){
+            localStorage.setItem(String(i), JSON.stringify(todos[i]));
+        }
+    }, [todos])
+
 
     const writeTodo = (e : React.FormEvent) => {
         e.preventDefault();
@@ -47,14 +54,25 @@ const TodoHeader = ({ todo_header_change, setTodo, todo, setTodos, todos} : Todo
 
         setTodo('');
     }
+
+    const DeleteAll = () => {
+        setTodos(() => {
+            return []
+        })   
+        localStorage.clear();
+    }
     
     return(
         <>
-            <form onSubmit={writeTodo}>
-                <input type="text" value={todo} onChange={todo_header_change} />
-                <button type="submit">submit</button>
-            </form>
+            <div className={styles.todo_header_container}>
+                <form onSubmit={writeTodo} className={styles.todo_header_form} >
+                    <input type="text" className={styles.todo_header_input_container} value={todo} onChange={todo_header_change} placeholder="write to do..." />
+                    <button type="submit" className={styles.todo_header_btn} >submit</button>
+                </form>
+                <button onClick={DeleteAll} className={styles.delete_all_list} >DeleteAll</button>
+            </div>
         </>
+        
     );
 
 }

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, {useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
+
 
 interface todosArray {
     id : number,
@@ -15,11 +15,8 @@ interface TodoBodyType {
     setTodos : React.Dispatch<React.SetStateAction<todosArray[]>>,
 }
 
-const TodoBody = ({ todos, setTodos } : TodoBodyType) => {
+const TodosYet = ({ todos, setTodos } : TodoBodyType) => {
     const [newText, setNewText] = useState('');
-
-    const params = useParams();
-    console.log('params ', params);
 
     //checkbox를 체크하면 lineThrough
     const onCheckChange = (e : React.FormEvent<HTMLInputElement>, id : number) => {    
@@ -37,8 +34,6 @@ const TodoBody = ({ todos, setTodos } : TodoBodyType) => {
             return element.id !== id
         })
         setTodos(newTodos);
-
-        localStorage.removeItem(id + "");
     }
 
     // update버튼을 눌렀을때 span -> input으로 변환
@@ -71,10 +66,10 @@ const TodoBody = ({ todos, setTodos } : TodoBodyType) => {
     const onChangeNewText = (e : React.FormEvent<HTMLInputElement>) => {
         setNewText(e.currentTarget.value);
     }
-
+    
     return(
         <>
-            {todos.map((element, index) => {
+            {todos.filter((element) => !element.isChecked).map((element, index) => {
                 return (
                     <div key={index}>
                         <input type="checkbox" checked={element.isChecked} onChange={(event) => onCheckChange(event, element.id)} />
@@ -108,4 +103,4 @@ const TodoBody = ({ todos, setTodos } : TodoBodyType) => {
     );
 }
 
-export default TodoBody;
+export default TodosYet;

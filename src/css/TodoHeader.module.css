@@ -1,0 +1,45 @@
+.todo_header_container{
+    margin : 100px 0px;
+    box-sizing:border-box;
+}
+
+.todo_header_form{
+    display:flex;
+    align-items:center;
+}
+
+.todo_header_input_container{
+    border:none;
+    border-bottom: 1px solid black;
+    text-align:center;
+    width:450px;
+    height:30px;
+    font-size:30px;
+    font-weight:bold;
+    padding:10px;
+    background: transparent;
+}
+
+.todo_header_btn{
+    width: 100px;
+    height:50px;
+    background-color:#ccc;
+    border-radius: 20px;
+    box-shadow: 3px 3px 3px black;
+    transition-duration: 0.3s;
+    font-weight: bold;
+    display:none;
+}
+
+.todo_header_btn :active{
+    margin-left:5px;
+    margin: top 5px;
+    box-shadow: none;
+}
+
+.todo_header_container > .delete_all_list{
+    margin-top:10px;
+    float:right;
+    background:transparent;
+    cursor:pointer;
+}

@@ -1,6 +1,10 @@
 import React,{useState, useEffect} from 'react';
+import styles from './css/App.module.css';
 import TodoHeader from './TodoHeader';
 import TodoBody from './TodoBody';
+import { BrowserRouter as Router, Routes, Route, Link }  from 'react-router-dom';
+import TodosYet from './TodosYet';
+import TodosDone from './TodosDone';
 
 interface todoItem {
   todoText : string,
@@ -49,10 +53,23 @@ function App() {
 
   return(
     <>
-      <br />
-      <hr />
-      <TodoHeader todo_header_change={onChange} todo={todo} setTodo={setTodo} setTodos={setTodos} todos={todos} />
-      <TodoBody setTodos={setTodos} todos={todos} />
+      <Router>
+        <div className={styles.todo_container}>
+          <TodoHeader todo_header_change={onChange} todo={todo} setTodo={setTodo} setTodos={setTodos} todos={todos} />
+            <div className={styles.todo_navi_container} >
+              <Link to="/" className={styles.menu} >모두보기</Link>
+              <Link to="/todosYet" className={styles.menu} >할일들</Link>
+              <Link to="/todosDone" className={styles.menu} >끝낸것들</Link>
+            </div>
+            <div className={styles.todos_body_container}>
+              <Routes>
+                <Route path='/' element={<TodoBody setTodos={setTodos} todos={todos}/>} />
+                <Route path='/todosYet' element={<TodosYet setTodos={setTodos} todos={todos}/>} />
+                <Route path='/todosDone' element={<TodosDone setTodos={setTodos} todos={todos}/>} />
+              </Routes>
+            </div>
+        </div>
+      </Router>
     </>
   );
 }
