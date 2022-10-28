@@ -37,7 +37,7 @@
     align-items: center;
     justify-content: space-between;
     height:50px;
-    padding:10px 50px;
+    padding:10px 25px;
 }
 
 .todo_container > .todos_body_container > div > span{
@@ -56,8 +56,7 @@
 }
 
 .todo_container > .todos_body_container > div > .btns > label {
-    cursor:pointer;
-    display:inline-block;
+    border:1px solid red;
     padding:10px;
-}
+}   
 

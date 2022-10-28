@@ -34,6 +34,11 @@ const TodosYet = ({ todos, setTodos } : TodoBodyType) => {
             return element.id !== id
         })
         setTodos(newTodos);
+
+        localStorage.clear();
+        for(let i=0;i<newTodos.length;i++){
+            localStorage.setItem(String(i), JSON.stringify(newTodos[i]));
+        }
     }
 
     // update버튼을 눌렀을때 span -> input으로 변환

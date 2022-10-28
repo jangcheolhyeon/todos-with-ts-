@@ -31,14 +31,19 @@ const TodoBody = ({ todos, setTodos } : TodoBodyType) => {
     }
     
 
-    //delete버튼을 눌럿을때 삭제하는 기능
+    //delete버튼을 눌럿을때 삭제하는 기능(localStroage가 깔끔하게 안지워져서 다 삭제하고 다시 넣는 방법으로...)
     const onDelBtn = (id : number) => {
+        console.log(id);
         const newTodos : Array<todosArray> = todos.filter((element) => {
             return element.id !== id
         })
+        console.log(newTodos);
         setTodos(newTodos);
 
-        localStorage.removeItem(id + "");
+        localStorage.clear();
+        for(let i=0;i<newTodos.length;i++){
+            localStorage.setItem(String(i), JSON.stringify(newTodos[i]));
+        }
     }
 
     // update버튼을 눌렀을때 span -> input으로 변환
@@ -52,6 +57,7 @@ const TodoBody = ({ todos, setTodos } : TodoBodyType) => {
         isEditingToggle(element);
         const newTodos = [...todos];
         newTodos.map((e) => {
+            console.log('e.id ', e.id, ' element.id ' + element.id);
             return element.id === e.id ? e.todoText = newText : e 
         })
         setTodos(newTodos);
@@ -84,19 +90,19 @@ const TodoBody = ({ todos, setTodos } : TodoBodyType) => {
                         ) : (
                             <span style={ element.isChecked ? { textDecoration:'line-through' } : {} } >{element.todoText}</span>
                         )}
-                        <div className='btns'>
+                        <div className="btns">
                             <input type="button" id="deleteBtn" onClick={() => onDelBtn(element.id)} />
-                            <label htmlFor='deleteBtn'><FontAwesomeIcon icon={faTrash} /></label>
+                            <label htmlFor='deleteBtn' style={{ padding : "10px" }} ><FontAwesomeIcon icon={faTrash} /></label>
                             {element.isEditing ? 
                             (
                                 <>
                                     <input type="button" id="completeBtn" onClick={() => onCompleteBtn(element)} />
-                                    <label htmlFor='completeBtn'><FontAwesomeIcon icon={faPen} /></label>
+                                    <label htmlFor='completeBtn' style={{ padding : "10px" }} ><FontAwesomeIcon icon={faPen} /></label>
                                 </>
                             ) : (
                                 <>
                                     <input type="button" id='updateBtn' onClick={() => onUpdateBtn(element)} /> 
-                                    <label htmlFor='updateBtn'><FontAwesomeIcon icon={faPen} /></label>
+                                    <label htmlFor='updateBtn' style={{ padding : "10px" }} ><FontAwesomeIcon icon={faPen} /></label>
                                 </>
                             )
                             }
