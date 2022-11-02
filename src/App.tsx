@@ -6,9 +6,6 @@ import { BrowserRouter as Router, Routes, Route, Link }  from 'react-router-dom'
 import TodosYet from './TodosYet';
 import TodosDone from './TodosDone';
 
-interface todoItem {
-  todoText : string,
-}
 // todos의 타입들
 interface todosArray {
   id : number,
@@ -24,6 +21,7 @@ function App() {
 
   const [todo, setTodo] = useState<string>('');
   const [todos, setTodos] = useState<todosArray[]>([]);
+  const [currentPage, setCurrentPage] = useState<string>('all');
 
   //앱이 처음 시작할때 localStroage에 있는 정보들을 todos에 넣어줌
   useEffect(() => {
@@ -50,22 +48,39 @@ function App() {
     setTodo(value);
     return value;
   }
+  console.log('currentPage = ', currentPage);
 
   return(
     <>
       <Router>
         <div className={styles.todo_container}>
           <TodoHeader todo_header_change={onChange} todo={todo} setTodo={setTodo} setTodos={setTodos} todos={todos} />
-            <div className={styles.todo_navi_container} >
-              <Link to="/" className={styles.menu} >모두보기</Link>
-              <Link to="/todosYet" className={styles.menu} >할일들</Link>
-              <Link to="/todosDone" className={styles.menu} >끝낸것들</Link>
+            <div className={styles.todo_navi_container}>
+              {/* currentPage라는 상태를 만들어서 page를 구분하게 만듬 */}
+              { currentPage === 'all' ? (
+                <Link to="/" style={{ textDecoration: "underline", textDecorationColor : "red", textDecorationStyle: "wavy" }}>모두보기</Link>
+              ) : (
+                <Link to="/">모두보기</Link>
+              ) }
+
+              { currentPage === 'ing' ? (
+                <Link to="/todosYet" style={{ textDecoration: "underline", textDecorationColor : "red", textDecorationStyle: "wavy"}}>진행중</Link>
+              ) : (
+                <Link to="/todosYet">진행중</Link>
+              ) }
+
+              { currentPage === 'done' ? (
+                <Link to="/todosDone" style={{ textDecoration: "underline", textDecorationColor : "red", textDecorationStyle: "wavy"}}>완료!</Link>
+              ) : (
+                <Link to="/todosDone">완료!</Link>
+              ) }
+
             </div>
             <div className={styles.todos_body_container}>
               <Routes>
-                <Route path='/' element={<TodoBody setTodos={setTodos} todos={todos}/>} />
-                <Route path='/todosYet' element={<TodosYet setTodos={setTodos} todos={todos}/>} />
-                <Route path='/todosDone' element={<TodosDone setTodos={setTodos} todos={todos}/>} />
+                <Route path='/' element={<TodoBody setTodos={setTodos} todos={todos} setCurrentPage={setCurrentPage} />} />
+                <Route path='/todosYet' element={<TodosYet setTodos={setTodos} todos={todos} setCurrentPage={setCurrentPage} />} />
+                <Route path='/todosDone' element={<TodosDone setTodos={setTodos} todos={todos} setCurrentPage={setCurrentPage} />} />
               </Routes>
             </div>
         </div>

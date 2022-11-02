@@ -13,10 +13,13 @@ interface todosArray {
 interface TodoBodyType {
     todos : todosArray[],
     setTodos : React.Dispatch<React.SetStateAction<todosArray[]>>,
+    setCurrentPage : React.Dispatch<React.SetStateAction<string>>,
 }
 
-const TodosYet = ({ todos, setTodos } : TodoBodyType) => {
+const TodosYet = ({ todos, setTodos, setCurrentPage } : TodoBodyType) => {
     const [newText, setNewText] = useState('');
+
+    setCurrentPage('ing');
 
     //checkbox를 체크하면 lineThrough
     const onCheckChange = (e : React.FormEvent<HTMLInputElement>, id : number) => {    
@@ -86,17 +89,17 @@ const TodosYet = ({ todos, setTodos } : TodoBodyType) => {
                         )}
                         <div className='btns'>
                             <input type="button" id="deleteBtn" onClick={() => onDelBtn(element.id)} />
-                            <label htmlFor='deleteBtn'><FontAwesomeIcon icon={faTrash} /></label>
+                            <label htmlFor='deleteBtn' style={{ padding : "10px" }}><FontAwesomeIcon icon={faTrash} /></label>
                             {element.isEditing ? 
                             (
                                 <>
                                     <input type="button" id="completeBtn" onClick={() => onCompleteBtn(element)} />
-                                    <label htmlFor='completeBtn'><FontAwesomeIcon icon={faPen} /></label>
+                                    <label htmlFor='completeBtn' style={{ padding : "10px" }} ><FontAwesomeIcon icon={faPen} /></label>
                                 </>
                             ) : (
                                 <>
                                     <input type="button" id='updateBtn' onClick={() => onUpdateBtn(element)} /> 
-                                    <label htmlFor='updateBtn'><FontAwesomeIcon icon={faPen} /></label>
+                                    <label htmlFor='updateBtn' style={{ padding : "10px" }} ><FontAwesomeIcon icon={faPen} /></label>
                                 </>
                             )
                             }

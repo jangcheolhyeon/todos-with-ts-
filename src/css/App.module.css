@@ -2,6 +2,10 @@
     width:100%;
     height:100%;
     position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -16,14 +20,14 @@
     margin-bottom: 100px;
 }
 
-.todo_container > .todo_navi_container > .menu {
+.todo_container > .todo_navi_container > a {
     text-decoration: none;
     color:black;
     font-weight:bold;
     font-size:25px;
 }
 
-.todo_container > .todo_navi_container > .menu:hover{
+.todo_container > .todo_navi_container > a:hover{
     color:blue;
 }
 
@@ -54,9 +58,4 @@
     border:none;
     border-bottom:2px solid black;
 }
-
-.todo_container > .todos_body_container > div > .btns > label {
-    border:1px solid red;
-    padding:10px;
-}   
 

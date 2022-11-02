@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 
@@ -13,13 +12,13 @@ interface todosArray {
 interface TodoBodyType {
     todos : todosArray[],
     setTodos : React.Dispatch<React.SetStateAction<todosArray[]>>,
+    setCurrentPage : React.Dispatch<React.SetStateAction<string>>,
 }
 
-const TodoBody = ({ todos, setTodos } : TodoBodyType) => {
+const TodoBody = ({ todos, setTodos, setCurrentPage } : TodoBodyType) => {
     const [newText, setNewText] = useState('');
 
-    const params = useParams();
-    console.log('params ', params);
+    setCurrentPage('all');
 
     //checkbox를 체크하면 lineThrough
     const onCheckChange = (e : React.FormEvent<HTMLInputElement>, id : number) => {    
@@ -29,15 +28,15 @@ const TodoBody = ({ todos, setTodos } : TodoBodyType) => {
         })
         setTodos(newTodos);
     }
-    
 
+    
     //delete버튼을 눌럿을때 삭제하는 기능(localStroage가 깔끔하게 안지워져서 다 삭제하고 다시 넣는 방법으로...)
     const onDelBtn = (id : number) => {
         console.log(id);
         const newTodos : Array<todosArray> = todos.filter((element) => {
             return element.id !== id
         })
-        console.log(newTodos);
+        // console.log(newTodos);
         setTodos(newTodos);
 
         localStorage.clear();
@@ -57,7 +56,7 @@ const TodoBody = ({ todos, setTodos } : TodoBodyType) => {
         isEditingToggle(element);
         const newTodos = [...todos];
         newTodos.map((e) => {
-            console.log('e.id ', e.id, ' element.id ' + element.id);
+            // console.log('e.id ', e.id, ' element.id ' + element.id);
             return element.id === e.id ? e.todoText = newText : e 
         })
         setTodos(newTodos);
